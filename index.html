@@ -41,6 +41,42 @@
       transition: background-color 0.5s, color 0.5s;
     }
 
+    /* Navigation Menu */
+    .navbar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background-color: var(--container-bg);
+      padding: 10px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      text-align: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links li a {
+      color: var(--text-color);
+      font-weight: bold;
+      text-decoration: none;
+      padding: 8px 12px;
+      transition: background-color 0.3s, color 0.3s;
+      border-radius: 10px;
+    }
+
+    .nav-links li a:hover {
+      background-color: var(--accent);
+      color: #fff;
+    }
+
     .container-wrapper {
       display: flex;
       justify-content: center;
@@ -58,6 +94,7 @@
       margin: 60px auto 100px;
       animation: fadeIn 1s ease;
       position: relative;
+      text-align: center;
     }
 
     .profile-photo {
@@ -96,7 +133,6 @@
 
     .social-links {
       margin-top: 20px;
-      text-align: center;
     }
 
     .social-links a {
@@ -160,29 +196,30 @@
       .gallery {
         grid-template-columns: 1fr;
       }
+
+      ul {
+        text-align: center;
+        padding-left: 0;
+      }
     }
 
-    /* Toggle Button */
-    .toggle-btn {
+    .toggle-icon {
       position: fixed;
       top: 20px;
       right: 20px;
-      background: var(--accent);
-      color: #fff;
+      background: none;
       border: none;
-      padding: 10px 16px;
-      border-radius: 20px;
+      font-size: 24px;
+      color: var(--accent);
       cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
       z-index: 1000;
+      transition: color 0.3s;
     }
 
-    .toggle-btn:hover {
-      background: #ff85c1;
+    .toggle-icon:hover {
+      color: #ff85c1;
     }
 
-    /* Scroll to top button */
     #scrollTopBtn {
       position: fixed;
       bottom: 30px;
@@ -211,7 +248,20 @@
   </style>
 </head>
 <body>
-  <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <button class="toggle-icon" onclick="toggleDarkMode()" id="darkModeIcon">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
   <button id="scrollTopBtn" onclick="scrollToTop()" title="Back to Top">
     <i class="fas fa-chevron-up"></i>
   </button>
@@ -220,10 +270,10 @@
     <div class="container">
       <div class="profile-photo"></div>
 
-      <h2>About Me</h2>
+      <h2 id="about">About Me</h2>
       <p>Hello! My name is Vlachos Nina and I am a young developer with experience in web technologies, including HTML, CSS, and JavaScript. I am currently enhancing my skills as a front-end web developer at Veritas University, Abuja. I enjoy building interactive and dynamic web applications.</p>
 
-      <h2>Skills</h2>
+      <h2 id="skills">Skills</h2>
       <div class="skills">
         <div class="skill">HTML</div>
         <div class="skill">CSS</div>
@@ -233,21 +283,21 @@
         <div class="skill">GitHub</div>
       </div>
 
-      <h2>Projects</h2>
+      <h2 id="projects">Projects</h2>
       <ul>
         <li>Project 1: Web Application built using Flask.</li>
         <li>Project 2: Portfolio Website built using HTML, CSS, and JavaScript.</li>
         <li>Project 3: Eatery website built using HTML, CSS, and JavaScript, designed using Figma.</li>
       </ul>
 
-      <h2>Gallery</h2>
+      <h2 id="gallery">Gallery</h2>
       <div class="gallery">
         <img src="https://via.placeholder.com/300x200?text=Project+1" alt="Project 1">
         <img src="https://via.placeholder.com/300x200?text=Project+2" alt="Project 2">
         <img src="https://via.placeholder.com/300x200?text=Project+3" alt="Project 3">
       </div>
 
-      <h2>Contact</h2>
+      <h2 id="contact">Contact</h2>
       <p>If you'd like to work together or just want to chat, feel free to get in touch!</p>
       <p>Email: <a href="mailto:ninavlachos0@gmail.com">ninavlachos0@gmail.com</a></p>
 
@@ -267,7 +317,16 @@
 
   <script>
     function toggleDarkMode() {
-      document.body.classList.toggle("dark");
+      const body = document.body;
+      const icon = document.getElementById("darkModeIcon").firstElementChild;
+
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        icon.classList.replace("fa-moon", "fa-sun");
+      } else {
+        icon.classList.replace("fa-sun", "fa-moon");
+      }
     }
 
     // Scroll to top button logic
